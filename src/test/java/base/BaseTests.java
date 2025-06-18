@@ -49,12 +49,12 @@ public class BaseTests implements WebDriverListener {
     @BeforeMethod
     public void goHome(){
         // Initialize based on which site you're testing
-        driver.get("https://the-internet.herokuapp.com/");
-        theInternetHomePage = new pages.HomePage(driver);
+//        driver.get("https://the-internet.herokuapp.com/");
+//        theInternetHomePage = new pages.HomePage(driver);
 
         // Or for Formy:
-        // driver.get("https://formy-project.herokuapp.com/");
-        // formyHomePage = new formy.HomePage(driver);
+         driver.get("https://formy-project.herokuapp.com/");
+         formyHomePage = new formy.HomePage(driver);
     }
 
 
