@@ -1,9 +1,8 @@
 package frames;
 
 import base.BaseTests;
-import org.testng.annotations.Test;
-import pages.NestedFramePage;
-import static org.testng.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class NestedFrameTests extends BaseTests {
 
