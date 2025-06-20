@@ -1,8 +1,9 @@
 package horizontalSlider;
 
 import base.BaseTests;
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 public class HorizontalSliderTests extends BaseTests {
 
@@ -28,7 +29,7 @@ public class HorizontalSliderTests extends BaseTests {
 
         // Assert that the final value is "4"
         String finalValue = horizontalSlider.getRangeText();
-        Assert.assertEquals(finalValue, "4", "Slider value should be 4");
+        assertEquals(finalValue, "4", "Slider value should be 4");
         System.out.println("Test passed! Final slider value: " + finalValue);
     }
 
@@ -38,15 +39,15 @@ public class HorizontalSliderTests extends BaseTests {
 
         // Test moving to value "2"
         moveSliderToValue(horizontalSlider, "2");
-        Assert.assertEquals(horizontalSlider.getRangeText(), "2", "Slider should be at value 2");
+        assertEquals(horizontalSlider.getRangeText(), "2", "Slider should be at value 2");
 
         // Test moving to value "3.5"
         moveSliderToValue(horizontalSlider, "3.5");
-        Assert.assertEquals(horizontalSlider.getRangeText(), "3.5", "Slider should be at value 3.5");
+        assertEquals(horizontalSlider.getRangeText(), "3.5", "Slider should be at value 3.5");
 
         // Test moving back to value "1"
         moveSliderToValue(horizontalSlider, "1");
-        Assert.assertEquals(horizontalSlider.getRangeText(), "1", "Slider should be at value 1");
+        assertEquals(horizontalSlider.getRangeText(), "1", "Slider should be at value 1");
     }
 
     @Test
@@ -55,11 +56,11 @@ public class HorizontalSliderTests extends BaseTests {
 
         // Move to maximum value (5)
         moveSliderToValue(horizontalSlider, "5");
-        Assert.assertEquals(horizontalSlider.getRangeText(), "5", "Slider should be at maximum value 5");
+        assertEquals(horizontalSlider.getRangeText(), "5", "Slider should be at maximum value 5");
 
         // Move to minimum value (0)
         moveSliderToValue(horizontalSlider, "0");
-        Assert.assertEquals(horizontalSlider.getRangeText(), "0", "Slider should be at minimum value 0");
+        assertEquals(horizontalSlider.getRangeText(), "0", "Slider should be at minimum value 0");
     }
 
     /**

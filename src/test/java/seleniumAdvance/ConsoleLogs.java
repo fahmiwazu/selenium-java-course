@@ -1,24 +1,32 @@
 package seleniumAdvance;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.devtools.DevTools;
 import org.openqa.selenium.devtools.v135.log.Log;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
 
 public class ConsoleLogs {
     ChromeDriver driver;
 
-    @BeforeClass
-    public void setUp(){
+    @BeforeEach
+    public void setUp() {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         driver.manage().window().maximize();
     }
 
+    @AfterEach
+    public void tearDown() {
+        if (driver != null) {
+            driver.quit();
+        }
+    }
+
     @Test
-    public void viewBrowserConsoleLogs(){
+    public void viewBrowserConsoleLogs() {
         // Get The DevTools & Create A Session
         DevTools devTools = driver.getDevTools();
         devTools.createSession();

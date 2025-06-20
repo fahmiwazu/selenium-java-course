@@ -1,8 +1,9 @@
 package javascript;
 
 import base.BaseTests;
+import org.junit.jupiter.api.Test;
 import org.openqa.selenium.JavascriptExecutor;
-import org.testng.annotations.Test;
+
 
 public class JavaScriptTests extends BaseTests {
 

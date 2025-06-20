@@ -1,11 +1,12 @@
 package login;
 
 import base.BaseTests;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 import pages.LoginPage;
 import pages.SecureAreaPage;
 
-import static org.testng.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 public class LoginTests extends BaseTests{
 

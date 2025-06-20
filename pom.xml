@@ -12,6 +12,8 @@
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <cucumber.version>7.18.0</cucumber.version>
+        <junit.version>5.10.2</junit.version>
     </properties>
 
     <dependencies>
@@ -41,12 +43,9 @@
             <artifactId>webdrivermanager</artifactId>
             <version>5.9.2</version>
         </dependency>
-        <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-            <version>7.11.0</version>
-            <scope>test</scope>
-        </dependency>
+
+        <!-- Remove TestNG as we're using JUnit 5 -->
+
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
@@ -63,6 +62,176 @@
             <version>2.22.1</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- Updated Cucumber Dependencies for JUnit Platform -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java</artifactId>
+            <version>7.23.0</version>
+        </dependency>
+
+        <!-- Use cucumber-junit-platform-engine instead of cucumber-junit -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-junit-platform-engine</artifactId>
+            <version>${cucumber.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-suite</artifactId>
+            <version>1.10.2</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Jackson dependencies to fix the warning -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>2.17.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.17.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>2.17.2</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>7.11.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Remove JUnit 4 dependency as we're using JUnit 5 -->
     </dependencies>
 
+    <build>
+        <plugins>
+            <!-- Maven Compiler Plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <release>21</release> <!-- Use release instead of source/target -->
+                </configuration>
+            </plugin>
+
+            <!-- Surefire Plugin for JUnit Platform (parallel execution) -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.2.5</version>
+                <configuration>
+                    <!-- Only run Cucumber tests -->
+                    <includes>
+                        <include>**/RunCucumberTests.java</include>
+                    </includes>
+                    <excludes>
+                        <!-- Exclude all other test classes -->
+                        <exclude>**/*Tests.java</exclude>
+                        <exclude>**/*Test.java</exclude>
+                    </excludes>
+                    <systemPropertyVariables>
+                        <!-- Cucumber parallel execution properties -->
+                        <cucumber.execution.parallel.enabled>true</cucumber.execution.parallel.enabled>
+                        <cucumber.execution.parallel.mode.default>concurrent</cucumber.execution.parallel.mode.default>
+                        <cucumber.execution.parallel.config.strategy>dynamic</cucumber.execution.parallel.config.strategy>
+                        <cucumber.execution.parallel.config.dynamic.factor>1.0</cucumber.execution.parallel.config.dynamic.factor>
+                        <cucumber.plugin>pretty,html:target/cucumber-reports/cucumber.html,json:target/cucumber-reports/cucumber.json,junit:target/cucumber-reports/cucumber.xml</cucumber.plugin>
+                    </systemPropertyVariables>
+                    <useModulePath>false</useModulePath>
+                </configuration>
+            </plugin>
+
+            <!-- Maven Antrun Plugin to create directories before test execution -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>create-cucumber-reports-dir</id>
+                        <phase>generate-test-resources</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <mkdir dir="${project.build.directory}/cucumber-reports"/>
+                            </target>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <!-- Add this to your pom.xml after the </build> tag -->
+    <profiles>
+        <!-- Profile for running only Cucumber tests -->
+        <profile>
+            <id>cucumber</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>3.2.5</version>
+                        <configuration>
+                            <includes>
+                                <include>**/RunCucumberTests.java</include>
+                            </includes>
+                            <systemPropertyVariables>
+                                <cucumber.execution.parallel.enabled>true</cucumber.execution.parallel.enabled>
+                                <cucumber.execution.parallel.mode.default>concurrent</cucumber.execution.parallel.mode.default>
+                                <cucumber.execution.parallel.config.strategy>dynamic</cucumber.execution.parallel.config.strategy>
+                                <cucumber.execution.parallel.config.dynamic.factor>1.0</cucumber.execution.parallel.config.dynamic.factor>
+                                <cucumber.plugin>pretty,html:target/cucumber-reports/cucumber.html,json:target/cucumber-reports/cucumber.json,junit:target/cucumber-reports/cucumber.xml</cucumber.plugin>
+                            </systemPropertyVariables>
+                            <useModulePath>false</useModulePath>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <!-- Profile for running only JUnit tests -->
+        <profile>
+            <id>junit</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>3.2.5</version>
+                        <configuration>
+                            <excludes>
+                                <exclude>**/RunCucumberTests.java</exclude>
+                            </excludes>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

@@ -1,15 +1,15 @@
 package dropdown;
 
 import base.BaseTests;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class DropDownTests extends BaseTests {
 
     @Test
-    public void testSelectOption(){
+    public void testSelectOption() {
         var dropDownPage = theInternetHomePage.clickDropDown();
 
         String option = "Option 1";
@@ -17,8 +17,7 @@ public class DropDownTests extends BaseTests {
 
         var selectedOptions = dropDownPage.getSelectedOptions();
 
-        assertEquals(selectedOptions.size(),1,"Incorrect number of selections");
-        assertTrue(selectedOptions.contains(option),"Option not selected");
+        assertEquals(1, selectedOptions.size(), "Incorrect number of selections");
+        assertTrue(selectedOptions.contains(option), "Option not selected");
     }
-
 }

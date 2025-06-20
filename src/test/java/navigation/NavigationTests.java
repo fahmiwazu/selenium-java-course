@@ -1,7 +1,8 @@
 package navigation;
 
 import base.BaseTests;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
+
 
 public class NavigationTests extends BaseTests {
 

@@ -1,8 +1,8 @@
 package frames;
 
 import base.BaseTests;
-import org.testng.annotations.Test;
-import static org.testng.Assert.assertEquals;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class FrameTests extends BaseTests {
 

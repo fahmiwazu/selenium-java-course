@@ -1,14 +1,14 @@
 package alerts;
 
 import base.BaseTests;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.testng.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class FileUploadTests extends BaseTests {
 
     @Test
-    public void testFileUpload(){
+    public void testFileUpload() {
         var uploadPage = theInternetHomePage.clickFileUpload();
 
         // Debug: Print page elements to understand what's available
@@ -30,10 +30,9 @@ public class FileUploadTests extends BaseTests {
     }
 
     @Test
-    public void testFileUploadAlternative(){
+    public void testFileUploadAlternative() {
         var uploadPage = theInternetHomePage.clickFileUpload();
 
-        // Alternative approach: use the combined uploadFile method
         try {
             uploadPage.uploadFile("D:\\Repository\\Automation\\IntelliJ Automation Test\\New folder" +
                     "\\selenium-java-waz\\resources\\chromedriver.exe");

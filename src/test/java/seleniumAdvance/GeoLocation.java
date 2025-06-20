@@ -1,12 +1,13 @@
 package seleniumAdvance;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.devtools.DevTools;
 import org.openqa.selenium.devtools.v135.emulation.Emulation;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+
 
 import java.util.HashMap;
 import java.util.Map;
