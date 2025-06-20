@@ -39,18 +39,29 @@ public class BaseTests implements WebDriverListener {
         driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(10));
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
 
-        goHome();
-        setCookie();
+        // Initial navigation and cookie setup
+        goHomeStatic();
+//        setCookie();
+    }
+
+    // Method helper for navigation setup
+    public static void navigationSetup(){
+        // Choose one based on the app you're testing
+        driver.get("https://the-internet.herokuapp.com/");
+        theInternetHomePage = new pages.HomePage(driver);
+
+//        driver.get("https://formy-project.herokuapp.com/");
+//        formyHomePage = new formy.HomePage(driver);
     }
 
     @BeforeEach
-    public static void goHome() {
-        // Choose one based on the app you're testing
-        // driver.get("https://the-internet.herokuapp.com/");
-        // theInternetHomePage = new pages.HomePage(driver);
+    public void goHome() {
+        navigationSetup();
+    }
 
-        driver.get("https://formy-project.herokuapp.com/");
-        formyHomePage = new formy.HomePage(driver);
+    // Helper method for initial setup
+    private static void goHomeStatic() {
+        navigationSetup();
     }
 
     @AfterEach
